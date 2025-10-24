@@ -1,0 +1,13 @@
+.htnmk {
+  color: #86cecb;
+}
+
+/* Quote Colors */
+
+.quote-39 {
+  border-inline-start-color: #86cecb !important;
+}
+
+.quote-danger {
+  border-inline-start-color: #dc143c !important;
+}

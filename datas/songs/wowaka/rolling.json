@@ -1,0 +1,11 @@
+{
+  "name": "ローリンガール",
+  "releasedAt": "2010-02-14T20:00:02+09:00",
+  "singers": ["初音ミク"],
+  "musician": "wowaka",
+  "link": "http://nico.ms/sm9714351",
+  "questions": {
+    "mythology": true,
+    "addition": {}
+  }
+}

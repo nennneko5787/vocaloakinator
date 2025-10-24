@@ -1,0 +1,14 @@
+{
+  "name": "初音ミクの消失",
+  "releasedAt": "2008-04-08T20:56:48+09:00",
+  "singers": ["初音ミク"],
+  "musician": "cosMo@暴走P",
+  "link": "http://nico.ms/sm2937784",
+  "questions": {
+    "mythology": true,
+    "addition": {
+      "は人間には歌唱不可能なぐらい高速なパートがありますか": true,
+      "では初音ミクは消失しますか": true
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>プレー中 - ボカロ曲アキネーター</title>
+
+    <!-- Load CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/colors.css" />
+    <link rel="stylesheet" href="/static/css/animations.css" />
+
+    <!-- Load JS -->
+    <script src="/static/js/play.js"></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container content">
+        <h1 class="title fadein">ボカロ曲アキネーター - プレー中</h1>
+        <p class="subtitle fadein">
+          <span class="htnmk">初音ミク</span>の質問に答えましょう
+        </p>
+        <blockquote class="fadein quote-39">
+          やあ、私は<span class="htnmk">初音ミク</span>です
+        </blockquote>
+
+        <div class="buttons fadein">
+          <button id="yes" class="button is-primary is-fullwidth">はい</button>
+          <button id="no" class="button is-danger is-fullwidth">いいえ</button>
+        </div>
+
+        <blockquote class="quote-danger fadein">
+          あなたのお気に入りのボカロ曲がありませんでしたか？<a href="/request"
+            >こちらから追加をリクエストできます</a
+          >。
+        </blockquote>
+
+        <blockquote class="quote-danger fadein">
+          エラーが発生した場合、すぐに<a href="https://x.com/Fng1Popn"
+            >開発者のTwitter</a
+          >へ報告をお願いします。
+        </blockquote>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Vocaloid songs akinator</strong> by
+          <a href="https://x.com/Fng1Popn">ねんねこ</a>. <br />
+          Copyrights to Vocaloid songs and characters
+          <b>belong to their creators</b>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "ゴーストルール",
+  "releasedAt": "2016-01-08T20:00:00+09:00",
+  "singers": ["初音ミク"],
+  "musician": "DECO*27",
+  "link": "http://nico.ms/sm27965309",
+  "questions": {
+    "mythology": true,
+    "addition": {
+      "は史上初、同一ボカロPによる神話入り2曲目のボカロ曲ですか": true
+    }
+  }
+}

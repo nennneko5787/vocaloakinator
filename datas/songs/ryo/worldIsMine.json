@@ -1,0 +1,14 @@
+{
+  "name": "ワールドイズマイン",
+  "releasedAt": "2008-05-31T17:20:54+09:00",
+  "singers": ["初音ミク"],
+  "musician": "ryo",
+  "link": "http://nico.ms/sm3504435",
+  "questions": {
+    "mythology": true,
+    "addition": {
+      "「世界で一番おひめさま」": true,
+      "人間には歌唱不可能なぐらい高音なパートがありますか": true
+    }
+  }
+}

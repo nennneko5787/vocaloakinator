@@ -1,0 +1,11 @@
+{
+  "name": "みっくみくにしてあげる♪【してやんよ】",
+  "releasedAt": "2007-09-20T01:22:02+09:00",
+  "singers": ["初音ミク"],
+  "musician": "ika",
+  "link": "http://nico.ms/sm1097445",
+  "questions": {
+    "mythology": true,
+    "addition": { "であなたはみっくみくにされますか": true }
+  }
+}

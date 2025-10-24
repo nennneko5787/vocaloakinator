@@ -1,0 +1,11 @@
+{
+  "name": "ベノム",
+  "releasedAt": "2018-08-02T20:00:00+09:00",
+  "singers": ["flower"],
+  "musician": "かいりきベア",
+  "link": "http://nico.ms/sm33624822",
+  "questions": {
+    "mythology": true,
+    "addition": {}
+  }
+}

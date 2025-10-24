@@ -1,0 +1,11 @@
+{
+  "name": "メルト",
+  "releasedAt": "2007-12-07T20:46:02+09:00",
+  "singers": ["初音ミク"],
+  "musician": "ryo",
+  "link": "http://nico.ms/sm1715919",
+  "questions": {
+    "mythology": true,
+    "addition": {}
+  }
+}

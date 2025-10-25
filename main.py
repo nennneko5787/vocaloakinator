@@ -20,6 +20,7 @@ async def musicReload():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    SongService.loadSongs()
     task1 = asyncio.create_task(musicReload())
     task2 = asyncio.create_task(deleteCheck())
     yield

@@ -24,7 +24,8 @@ class Singers(Enum):
 
 
 class SongQuestions(BaseModel):
-    mythology: bool  # 神話入りしているか？なお神話入りの基準はニコニコ動画で行うものとする(YT基準の判定も後で作るかも？)
+    mythology: bool = False  # 神話入りしているか？なお神話入りの基準はニコニコ動画で行うものとする(YT基準の判定も後で作るかも？)
+    legend: bool = False  # 伝説入りしているか？なお伝説入りの基準は(ry
     addition: Dict[str, bool]
 
 
@@ -42,6 +43,7 @@ class SongService:
     songs: List[Song] = []
     questions: Dict[str, Optional[str]] = {}
     questions["は神話入りしていますか"] = "mythology"
+    questions["は伝説入りしていますか"] = "legend"
     dataFrame: pd.DataFrame = None
 
     for singer in Singers:
@@ -49,6 +51,15 @@ class SongService:
 
     @classmethod
     def loadSongs(cls):
+        cls.songs: List[Song] = []
+        cls.questions: Dict[str, Optional[str]] = {}
+        cls.questions["は神話入りしていますか"] = "mythology"
+        cls.questions["は伝説入りしていますか"] = "legend"
+        cls.dataFrame: pd.DataFrame = None
+
+        for singer in Singers:
+            cls.questions[f"は{singer.value}が歌っていますか"] = None
+
         fileList = glob.glob("datas/songs/**/*.json")
         for file in fileList:
             _, _, musician, id = file.replace("\\", "/").split("/")

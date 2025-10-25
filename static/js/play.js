@@ -42,7 +42,8 @@ async function answer(answer) {
 
   const jsonData = await response.json();
   if (response.status != 200) {
-    alert(`エラーが発生しました。: ${jsonData.detail}`);
+    alert(`エラーが発生しました。: ${jsonData.detail}\nページを再読込します。`);
+    window.location.reload();
   }
 
   const progressBar = document.querySelector(".progress");

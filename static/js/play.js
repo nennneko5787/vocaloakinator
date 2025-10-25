@@ -54,10 +54,11 @@ async function answer(answer) {
     progressBar.value = jsonData.progress * 100;
     progressBar.textContent = `${jsonData.progress * 100}%`;
   } else if (jsonData.detail == "SONG_MATCHED") {
-    document.querySelector(".buttons").remove();
-    question.innerHTML = `おそらくその曲は${jsonData.song.musician}さんの${jsonData.song.name}でしょう！<br>\n<a href="${jsonData.song.link}">ここから聴くことができます</a><br>\n<a href="/play">もう一度遊びますか？ここからもう一度遊べます</a>`;
+    document.querySelector(".answerButtons").remove();
+    document.querySelector(".controlls").style.display = null;
+    question.innerHTML = `おそらくその曲は${jsonData.song.musician}さんの${jsonData.song.name}でしょう！`;
+    document.querySelector(".song-link").href = jsonData.song.link;
 
-    console.log(jsonData.song.link);
     if (jsonData.song.link.startsWith("https://nico.ms/")) {
       iframeElement = document.createElement("iframe");
       iframeElement.src = `https://embed.nicovideo.jp/watch/${

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>お問い合わせ | ボカロ曲アキネーター</title>
+
+    <meta name="theme-color" content="#86cecb" />
+
+    <meta property="og:title" content="お問い合わせ" />
+    <meta property="og:url" content="https://htnmk.com" />
+    <meta property="og:image" content="https://htnmk.com/static/img/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ボカロ曲アキネーター" />
+    <meta property="og:locale" content="ja_JP" />
+    <!-- Twitter Card Tag -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Fng1Popn" />
+
+    <meta name="title" content="お問い合わせ" />
+    <meta
+      name="description"
+      content="ボカロ曲アキネーターの初音ミクは魔法のようにあなたの心を読み、思い浮かべているボカロ曲を当てます。神話入りしているボカロ曲でもマイナーなボカロ曲でも構いません。いくつかの質問に答えるだけで、初音ミクがその人物を推測します。この精霊に挑戦してみませんか？"
+    />
+    <meta
+      name="keywords"
+      content="aki,Akinator,akinator,アキネーター,初音ミク,鏡音リン,鏡音レン,Hatsune Miku,Miku,miku,39"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="Japanese" />
+
+    <!-- Load CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/colors.css" />
+    <link rel="stylesheet" href="/static/css/animations.css" />
+    <link rel="stylesheet" href="/static/css/design.css" />
+
+    <!-- Load JS -->
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
+    <script src="/static/js/contact.js"></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container content">
+        <h1 class="title fadein">お問い合わせ</h1>
+        <p class="subtitle fadein">
+          バグの報告、曲の追加リクエストができます。
+        </p>
+
+        <form class="form fadein" method="POST" action="/api/contact">
+          <div class="field">
+            <label class="label">あなたの名前</label>
+            <div class="control">
+              <input
+                class="input"
+                name="name"
+                type="text"
+                placeholder="初音ミク"
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label"
+              >お問い合わせ内容 <span class="has-text-danger">*</span></label
+            >
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select class="contactType" name="contactType" required>
+                  <option value="">選択してください</option>
+                  <option value="bug">バグ報告</option>
+                  <option value="song">曲追加</option>
+                  <option value="other">その他</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="bug mchoice" style="display: none">
+            <div class="field">
+              <label class="label"
+                >バグの内容 <span class="has-text-danger">*</span></label
+              >
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  name="bugContent"
+                  placeholder="できるだけ詳しく書いてください。"
+                  required
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="song mchoice" style="display: none">
+            <div class="field">
+              <label class="label"
+                >追加してほしいボカロ曲のリンク
+                <span class="has-text-danger">*</span></label
+              >
+              <div class="control">
+                <input
+                  class="input"
+                  name="vocaloURL"
+                  type="text"
+                  placeholder="Youtubeまたはニコニコ動画またはbilibiliでお願いします"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="other mchoice" style="display: none">
+            <div class="field">
+              <label class="label"
+                >お問い合わせしたい内容
+                <span class="has-text-danger">*</span></label
+              >
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  name="content"
+                  placeholder="できるだけ詳しく書いてください。"
+                  required
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" name="agree" required />
+                このお問い合わせフォームを通じて誹謗中傷を行った場合、法的処置が取られる可能性があることに同意します。
+                <span class="has-text-danger">*</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div
+              class="cf-turnstile"
+              data-size="flexible"
+              data-callback="enableSubmit"
+              data-sitekey="0x4AAAAAAB8lhZ2zzP1Ul05r"
+              required
+            ></div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button
+                class="button is-link is-fullwidth"
+                id="submit-button"
+                disabled
+              >
+                送信
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Vocaloid songs akinator</strong> by
+          <a href="https://x.com/Fng1Popn">ねんねこ</a>. <br />
+          Copyrights to Vocaloid songs and characters
+          <b>belong to their creators</b>.<br />
+          Icon emoji by
+          <a href="https://github.com/twitter/twemoji">Twemoji</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

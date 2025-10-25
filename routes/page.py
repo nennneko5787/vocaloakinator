@@ -13,3 +13,8 @@ def root(request: Request):
 @router.get("/play")
 def play(request: Request):
     return templates.TemplateResponse(request, "play.html")
+
+
+@router.get("/contact")
+def contact(request: Request):
+    return templates.TemplateResponse(request, "contact.html")

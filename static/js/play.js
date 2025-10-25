@@ -59,7 +59,7 @@ async function answer(answer) {
     console.log(jsonData.song.link);
     if (jsonData.song.link.startsWith("https://nico.ms/")) {
       iframeElement = document.createElement("iframe");
-      iframeElement.src = `http://embed.nicovideo.jp/watch/${
+      iframeElement.src = `https://embed.nicovideo.jp/watch/${
         jsonData.song.link.split("/")[3]
       }`;
 

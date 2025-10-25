@@ -15,7 +15,7 @@ async def musicReload():
     while True:
         if datetime.now().minute == 0:
             await asyncio.to_thread(SongService.loadSongs)
-            await asyncio.sleep(60)
+        await asyncio.sleep(60)
 
 
 @asynccontextmanager

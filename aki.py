@@ -1,4 +1,23 @@
-from vocasong import VocaSongAki
+from vocasong import Choices, SongService, VocaSongAki
+
+
+def strToChoices(choice: str) -> Choices:
+    match choice:
+        case "y":
+            return Choices.YES
+        case "py":
+            return Choices.PROBABLY_YES
+        case "idk":
+            return Choices.IDK
+        case "pn":
+            return Choices.PROBABLY_NO
+        case "n":
+            return Choices.NO
+
+    return False
+
+
+SongService.loadSongs()
 
 aki = VocaSongAki()
 
@@ -9,7 +28,10 @@ while not aki.end:
 
     print(aki.question)
 
-    aki.answer(not input("[Y/n]: ") == "n")
+    while not (choice := strToChoices(input("[y/py/idk/pn/n]: "))):
+        pass
+
+    aki.answer(choice)
 
     if aki.answerSong:
         print(

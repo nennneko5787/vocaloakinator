@@ -1,0 +1,30 @@
+.overlay {
+  width: 100dvw;
+  height: 100dvh;
+
+  position: fixed;
+
+  background-color: #000000dd;
+  z-index: 1001;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress::-webkit-progress-value {
+  transition: width 1s ease;
+}
+
+.buttons {
+  transition: 3s ease;
+}
+
+.videoContainer {
+  width: 100%;
+}
+
+iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+}

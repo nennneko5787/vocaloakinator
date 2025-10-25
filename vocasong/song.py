@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Dict, List, Optional
 
 import orjson
+import pandas as pd
 from pydantic import BaseModel
 
 
@@ -37,41 +38,84 @@ class Song(BaseModel):
     questions: SongQuestions
 
 
-songs: List[Song] = []
-questions: Dict[str, Optional[str]] = {}
-questions["は神話入りしていますか"] = "mythology"
+class SongService:
+    songs: List[Song] = []
+    questions: Dict[str, Optional[str]] = {}
+    questions["は神話入りしていますか"] = "mythology"
+    dataFrame: pd.DataFrame = None
 
-for singer in Singers:
-    questions[f"は{singer.value}が歌っていますか"] = None
+    for singer in Singers:
+        questions[f"は{singer.value}が歌っていますか"] = None
 
+    @classmethod
+    def loadSongs(cls):
+        fileList = glob.glob("datas/songs/**/*.json")
+        for file in fileList:
+            _, _, musician, id = file.replace("\\", "/").split("/")
+            id = id.removesuffix(".json")
 
-def loadSongs():
-    fileList = glob.glob("datas/songs/**/*.json")
-    for file in fileList:
-        _, _, musician, id = file.replace("\\", "/").split("/")
-        id = id.removesuffix(".json")
+            with open(file, "rb") as f:
+                data = orjson.loads(f.read())
+                data["id"] = f"{musician}-{id}"
 
-        with open(file, "rb") as f:
-            data = orjson.loads(f.read())
-            data["id"] = f"{musician}-{id}"
+                song = Song.model_validate(data)
 
-            song = Song.model_validate(data)
+                for question in song.questions.addition.keys():
+                    cls.questions[question] = None
 
-            for question in song.questions.addition.keys():
-                questions[question] = None
+                cls.questions[f"は{song.releasedAt.year}年にリリースされましたか"] = (
+                    song.releasedAt.year
+                )
 
-            questions[f"は{song.releasedAt.year}年にリリースされましたか"] = (
-                song.releasedAt.year
-            )
+                cls.questions[f"のタイトルは{song.name[0]}から始まりますか"] = None
+                cls.questions[f"は{song.musician}さんによる楽曲ですか"] = None
 
-            questions[f"のタイトルは{song.name[0]}から始まりますか"] = None
+                cls.songs.append(song)
 
-            songs.append(song)
+        data = []
 
+        for song in cls.songs:
+            songDict = {"name": song.id}
+            dumpedQuestion = song.questions.model_dump()
 
-def getSongById(id: str) -> Song:
-    for song in songs:
-        if song.id == id:
-            return song
+            for questionRawName, questionId in cls.questions.items():
+                if questionId is None:
+                    if questionRawName == f"のタイトルは{song.name[0]}から始まりますか":
+                        songDict[questionRawName] = True
+                        continue
 
-    raise ValueError()
+                    if questionRawName == f"は{song.musician}さんによる楽曲ですか":
+                        songDict[questionRawName] = True
+                        continue
+
+                    singerMatched = False
+                    for singer in Singers:
+                        if questionRawName == f"は{singer.value}が歌っていますか":
+                            songDict[questionRawName] = singer in song.singers
+                            singerMatched = True
+                            break
+                    if singerMatched:
+                        continue
+
+                    songDict[questionRawName] = song.questions.addition.get(
+                        questionRawName, False
+                    )
+                    continue
+
+                if isinstance(questionId, int):
+                    songDict[questionRawName] = questionId == song.releasedAt.year
+                    continue
+
+                songDict[questionRawName] = dumpedQuestion[questionId]
+
+            data.append(songDict)
+
+        cls.dataFrame = pd.DataFrame(data)
+
+    @classmethod
+    def getSongById(cls, id: str) -> Song:
+        for song in cls.songs:
+            if song.id == id:
+                return song
+
+        raise ValueError()

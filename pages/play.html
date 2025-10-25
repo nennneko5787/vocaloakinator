@@ -13,24 +13,79 @@
     />
     <link rel="stylesheet" href="/static/css/colors.css" />
     <link rel="stylesheet" href="/static/css/animations.css" />
+    <link rel="stylesheet" href="/static/css/design.css" />
 
     <!-- Load JS -->
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
     <script src="/static/js/play.js"></script>
   </head>
   <body>
+    <div class="overlay">
+      <div class="content">
+        <blockquote class="quote-39" id="overlayMessage">
+          ボカロ曲アキネーターで遊ぶには、あなたがロボットでないことを証明する必要があります。<br />
+          まあ、<span class="quote-39">私</span
+          >はロボットみたいなもんだけどね...（笑）<br />
+          下のチェックボックスをクリックして、ロボットでないことの証明をお願いします！
+        </blockquote>
+        <div
+          class="cf-turnstile"
+          data-size="flexible"
+          data-callback="startAki"
+          data-sitekey="0x4AAAAAAB8lhZ2zzP1Ul05r"
+        ></div>
+      </div>
+    </div>
+
     <section class="section">
       <div class="container content">
         <h1 class="title fadein">ボカロ曲アキネーター - プレー中</h1>
         <p class="subtitle fadein">
           <span class="htnmk">初音ミク</span>の質問に答えましょう
         </p>
-        <blockquote class="fadein quote-39">
+        <blockquote class="fadein quote-39" id="question">
           やあ、私は<span class="htnmk">初音ミク</span>です
         </blockquote>
 
+        <progress class="progress is-link" value="0" max="100">15%</progress>
+
+        <div class="videoContainer" style="display: none"></div>
+
         <div class="buttons fadein">
-          <button id="yes" class="button is-primary is-fullwidth">はい</button>
-          <button id="no" class="button is-danger is-fullwidth">いいえ</button>
+          <button
+            data-answer="y"
+            class="button is-link is-fullwidth answerButton"
+          >
+            はい
+          </button>
+          <button
+            data-answer="py"
+            class="button is-success is-fullwidth answerButton"
+          >
+            たぶんそう
+          </button>
+          <button
+            data-answer="idk"
+            class="button is-info is-fullwidth answerButton"
+          >
+            わからない
+          </button>
+          <button
+            data-answer="pn"
+            class="button is-warning is-fullwidth answerButton"
+          >
+            たぶん違う
+          </button>
+          <button
+            data-answer="n"
+            class="button is-danger is-fullwidth answerButton"
+          >
+            いいえ
+          </button>
         </div>
 
         <blockquote class="quote-danger fadein">

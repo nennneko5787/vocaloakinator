@@ -1,4 +1,8 @@
-fastapi[all]
+--extra-index-url https://termux-user-repository.github.io/pypi/
+pydantic==2.10.6
+fastapi
+jinja2
+hypercorn
 pandas
 numpy
 discord

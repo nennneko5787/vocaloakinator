@@ -21,6 +21,7 @@ class Singers(Enum):
     FLOWER = "flower"
     TETO = "重音テト"
     SELF = "ボカロP本人"
+    YUKARI = "結月ゆかり"
 
 
 class SongQuestions(BaseModel):

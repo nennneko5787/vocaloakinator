@@ -4,3 +4,4 @@ fastapi
 jinja2
 hypercorn
 httpx
+python-dotenv

@@ -1,9 +1,9 @@
 import glob
+import json
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional
 
-import orjson
 import pandas as pd
 from pydantic import BaseModel
 
@@ -66,8 +66,8 @@ class SongService:
             _, _, musician, id = file.replace("\\", "/").split("/")
             id = id.removesuffix(".json")
 
-            with open(file, "rb") as f:
-                data = orjson.loads(f.read())
+            with open(file, "r", encoding="utf-8") as f:
+                data = json.loads(f.read())
                 data["id"] = f"{musician}-{id}"
 
                 song = Song.model_validate(data)

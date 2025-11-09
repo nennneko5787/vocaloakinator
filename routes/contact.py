@@ -1,8 +1,6 @@
 import os
 from typing import Dict, Literal
 
-import aiohttp
-import discord
 import dotenv
 import httpx
 from fastapi import APIRouter, Form, Request
@@ -14,9 +12,34 @@ dotenv.load_dotenv()
 
 router = APIRouter()
 
-webhook = discord.Webhook.from_url(
-    os.getenv("webhook"), session=aiohttp.ClientSession()
-)
+WEBHOOK_URL = os.getenv("webhook")
+
+
+def escapeMentions(text: str) -> str:
+    """Discordのメンション記法をエスケープする"""
+    return text.replace("@", "@\u200b").replace("#", "#\u200b")
+
+
+async def sendDiscordWebhook(
+    http: httpx.AsyncClient,
+    title: str,
+    description: str,
+    authorName: str,
+    ipAddress: str,
+):
+    """Discord Webhookにメッセージを送信する"""
+    payload = {
+        "embeds": [
+            {
+                "title": title,
+                "description": escapeMentions(description),
+                "author": {"name": authorName},
+                "fields": [{"name": "IPAddress", "value": ipAddress}],
+            }
+        ]
+    }
+
+    await http.post(WEBHOOK_URL, json=payload, timeout=10)
 
 
 @router.post("/api/contact")
@@ -31,7 +54,7 @@ async def contact(
     cfToken: str = Form(None, alias="cf-turnstile-response"),
 ):
     ipAddress = (
-        request.headers.get["CF-Connecting-IP"]
+        request.headers.get("CF-Connecting-IP")
         if isFromCloudflare(request.client.host)
         else request.client.host
     )
@@ -84,42 +107,40 @@ async def contact(
     if not contactType:
         return PlainTextResponse("spamお疲れ様！ｗ", 403)
 
-    match contactType:
-        case "bug":
-            if not bugContent:
-                return PlainTextResponse("spamお疲れ様！ｗ", 403)
+    async with httpx.AsyncClient() as http:
+        match contactType:
+            case "bug":
+                if not bugContent:
+                    return PlainTextResponse("spamお疲れ様！ｗ", 403)
 
-            await webhook.send(
-                embed=discord.Embed(
+                await sendDiscordWebhook(
+                    http,
                     title="バグ報告",
-                    description=discord.utils.escape_mentions(bugContent),
+                    description=bugContent,
+                    author_name=name,
+                    ip_address=ipAddress,
                 )
-                .set_author(name=name)
-                .add_field(name="IPAddress", value=ipAddress),
-            )
-        case "song":
-            if not vocaloURL:
-                return PlainTextResponse("spamお疲れ様！ｗ", 403)
+            case "song":
+                if not vocaloURL:
+                    return PlainTextResponse("spamお疲れ様！ｗ", 403)
 
-            await webhook.send(
-                embed=discord.Embed(
+                await sendDiscordWebhook(
+                    http,
                     title="ボカロ曲追加リクエスト",
-                    description=discord.utils.escape_mentions(vocaloURL),
+                    description=vocaloURL,
+                    author_name=name,
+                    ip_address=ipAddress,
                 )
-                .set_author(name=name)
-                .add_field(name="IPAddress", value=ipAddress),
-            )
-        case "other":
-            if not content:
-                return PlainTextResponse("spamお疲れ様！ｗ", 403)
+            case "other":
+                if not content:
+                    return PlainTextResponse("spamお疲れ様！ｗ", 403)
 
-            await webhook.send(
-                embed=discord.Embed(
+                await sendDiscordWebhook(
+                    http,
                     title="その他のお問い合わせ",
-                    description=discord.utils.escape_mentions(content),
+                    description=content,
+                    author_name=name,
+                    ip_address=ipAddress,
                 )
-                .set_author(name=name)
-                .add_field(name="IPAddress", value=ipAddress),
-            )
 
     return PlainTextResponse("お問い合わせは受理されました！ありがとうございます！")

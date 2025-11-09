@@ -1,6 +1,7 @@
 --extra-index-url https://termux-user-repository.github.io/pypi/
 pydantic==2.10.6
 fastapi
+python-multipart
 jinja2
 hypercorn
 httpx
